@@ -6,19 +6,25 @@ var lowercase = "abcdefghijklmnopqrstuvwxyz".split("");
 var specialcase = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~".split("");
 var numbers = "0123456789".split("");
 
+var upperorno;
+var lowerorno;
+var specialorno;
+var numbersorno;
+var pwlength;
+
 // Write password to the #password input
 function askCriteria() {
-  var pwlength = parseInt(prompt("Between 8~128 characters, how many password characters do you want?"));
+  pwlength = parseInt(prompt("Between 8~128 characters, how many password characters do you want?"));
   if ((pwlength < 8) || (pwlength > 128)){
     alert("Please select a number between 8 ~ 128.");
     location.reload();
     return;
   }
 
-  var upperorno = confirm("Do you want uppercase?");
-  var lowerorno = confirm("Do you want lowercase?");
-  var specialorno = confirm("Do you want special characters?");
-  var numbersorno = confirm("Do you want numbers?");
+   upperorno = confirm("Do you want uppercase?");
+   lowerorno = confirm("Do you want lowercase?");
+   specialorno = confirm("Do you want special characters?");
+   numbersorno = confirm("Do you want numbers?");
 
   if ((upperorno === false) && 
   (lowerorno === false) && 
@@ -28,44 +34,36 @@ function askCriteria() {
     return;
   }
 
-  var criteria = {
-    length: pwlength,
-    hasUpper: upperorno,
-    hasLower: lowerorno,
-    hasSpecial: specialorno,
-    hasNumbers: numbersorno
-  }
-  return criteria;
 } 
 
 function generatePassword() {
-  var criteria = askCriteria();
+  askCriteria();
   
   var pwpool = [];
   var thepw = [];
 
-  if (criteria.hasUpper) {
+  if (upperorno) {
     pwpool = pwpool.concat(uppercase); 
   } 
 
-  if (criteria.hasLower) {
+  if (lowerorno) {
     pwpool = pwpool.concat(lowercase); 
   } 
 
-  if (criteria.hasSpecial) {
+  if (specialorno) {
     pwpool = pwpool.concat(specialcase); 
   } 
   
-  if (criteria.hasNumbers) {
+  if (numbersorno) {
     pwpool = pwpool.concat(numbers); 
   } 
 
-  for(var i = 0; i < criteria.length; i++){
+  for(var i = 0; i < pwlength; i++){
     var randomIndex = Math.floor(Math.random() * pwpool.length);
     var picking = pwpool[randomIndex];
-      thepw.push(picking);
-    }
-    return thepw.join("");
+    thepw.push(picking);
+  }
+  return thepw.join("");
     
 }
 
